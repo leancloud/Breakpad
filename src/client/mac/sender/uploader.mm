@@ -38,7 +38,6 @@
 
 #import "client/apple/Framework/BreakpadDefines.h"
 #import "client/mac/sender/uploader.h"
-#import "common/mac/GTMLogger.h"
 
 const int kMinidumpFileLengthLimit = 2 * 1024 * 1024;  // 2MB
 
@@ -89,17 +88,17 @@ NSData *readData(int fileId, ssize_t length) {
 NSDictionary *readConfigurationData(const char *configFile) {
   int fileId = open(configFile, O_RDONLY, 0600);
   if (fileId == -1) {
-    GTMLoggerDebug(@"Couldn't open config file %s - %s",
-                   configFile,
-                   strerror(errno));
+    NSLog(@"Couldn't open config file %s - %s",
+          configFile,
+          strerror(errno));
   }
 
   // we want to avoid a build-up of old config files even if they
   // have been incorrectly written by the framework
   if (unlink(configFile)) {
-    GTMLoggerDebug(@"Couldn't unlink config file %s - %s",
-                   configFile,
-                   strerror(errno));
+    NSLog(@"Couldn't unlink config file %s - %s",
+          configFile,
+          strerror(errno));
   }
 
   if (fileId == -1) {
@@ -567,13 +566,13 @@ NSDictionary *readConfigurationData(const char *configFile) {
   const char *dest = [destString fileSystemRepresentation];
 
   if (rename(src, dest) == 0) {
-    GTMLoggerInfo(@"Breakpad Uploader: Renamed %s to %s after successful " \
-                  "upload",src, dest);
+    NSLog(@"Breakpad Uploader: Renamed %s to %s after successful " \
+          "upload",src, dest);
   }
   else {
     // can't rename - don't worry - it's not important for users
-    GTMLoggerDebug(@"Breakpad Uploader: successful upload report ID = %s\n",
-                   reportID );
+    NSLog(@"Breakpad Uploader: successful upload report ID = %s\n",
+          reportID );
   }
   [result release];
 }

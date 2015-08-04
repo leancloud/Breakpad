@@ -33,8 +33,6 @@
 		16C7CE1A147D4A4300776EAD /* minidump_file_writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 16C7CC06147D4A4300776EAD /* minidump_file_writer.h */; };
 		16C7CE40147D4A4300776EAD /* convert_UTF.c in Sources */ = {isa = PBXBuildFile; fileRef = 16C7CC4A147D4A4300776EAD /* convert_UTF.c */; };
 		16C7CE41147D4A4300776EAD /* convert_UTF.h in Headers */ = {isa = PBXBuildFile; fileRef = 16C7CC4B147D4A4300776EAD /* convert_UTF.h */; };
-		16C7CE78147D4A4300776EAD /* GTMLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 16C7CC88147D4A4300776EAD /* GTMLogger.h */; };
-		16C7CE79147D4A4300776EAD /* GTMLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 16C7CC89147D4A4300776EAD /* GTMLogger.m */; };
 		16C7CE7A147D4A4300776EAD /* HTTPMultipartUpload.h in Headers */ = {isa = PBXBuildFile; fileRef = 16C7CC8A147D4A4300776EAD /* HTTPMultipartUpload.h */; };
 		16C7CE7B147D4A4300776EAD /* HTTPMultipartUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = 16C7CC8B147D4A4300776EAD /* HTTPMultipartUpload.m */; };
 		16C7CE83147D4A4300776EAD /* file_id.cc in Sources */ = {isa = PBXBuildFile; fileRef = 16C7CC93147D4A4300776EAD /* file_id.cc */; };
@@ -87,8 +85,6 @@
 		16C7CC07147D4A4300776EAD /* minidump_file_writer_unittest.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = minidump_file_writer_unittest.cc; sourceTree = "<group>"; };
 		16C7CC4A147D4A4300776EAD /* convert_UTF.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = convert_UTF.c; sourceTree = "<group>"; };
 		16C7CC4B147D4A4300776EAD /* convert_UTF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = convert_UTF.h; sourceTree = "<group>"; };
-		16C7CC88147D4A4300776EAD /* GTMLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMLogger.h; sourceTree = "<group>"; };
-		16C7CC89147D4A4300776EAD /* GTMLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMLogger.m; sourceTree = "<group>"; };
 		16C7CC8A147D4A4300776EAD /* HTTPMultipartUpload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPMultipartUpload.h; sourceTree = "<group>"; };
 		16C7CC8B147D4A4300776EAD /* HTTPMultipartUpload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPMultipartUpload.m; sourceTree = "<group>"; };
 		16C7CC93147D4A4300776EAD /* file_id.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = file_id.cc; sourceTree = "<group>"; };
@@ -281,8 +277,6 @@
 		16C7CC82147D4A4300776EAD /* mac */ = {
 			isa = PBXGroup;
 			children = (
-				16C7CC88147D4A4300776EAD /* GTMLogger.h */,
-				16C7CC89147D4A4300776EAD /* GTMLogger.m */,
 				16C7CC8A147D4A4300776EAD /* HTTPMultipartUpload.h */,
 				16C7CC8B147D4A4300776EAD /* HTTPMultipartUpload.m */,
 				16C7CC93147D4A4300776EAD /* file_id.cc */,
@@ -328,7 +322,6 @@
 				16C7CE18147D4A4300776EAD /* minidump_file_writer-inl.h in Headers */,
 				16C7CE1A147D4A4300776EAD /* minidump_file_writer.h in Headers */,
 				16C7CE41147D4A4300776EAD /* convert_UTF.h in Headers */,
-				16C7CE78147D4A4300776EAD /* GTMLogger.h in Headers */,
 				16C7CE7A147D4A4300776EAD /* HTTPMultipartUpload.h in Headers */,
 				16C7CE84147D4A4300776EAD /* file_id.h in Headers */,
 				16C7CE86147D4A4300776EAD /* macho_id.h in Headers */,
@@ -370,7 +363,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0640;
 			};
 			buildConfigurationList = 1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "Breakpad" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -418,7 +411,6 @@
 				16C7CE09147D4A4300776EAD /* uploader.mm in Sources */,
 				16C7CE19147D4A4300776EAD /* minidump_file_writer.cc in Sources */,
 				16C7CE40147D4A4300776EAD /* convert_UTF.c in Sources */,
-				16C7CE79147D4A4300776EAD /* GTMLogger.m in Sources */,
 				16C7CE7B147D4A4300776EAD /* HTTPMultipartUpload.m in Sources */,
 				16C7CE83147D4A4300776EAD /* file_id.cc in Sources */,
 				16C7CE85147D4A4300776EAD /* macho_id.cc in Sources */,
@@ -440,10 +432,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					"$(ARCHS_STANDARD)",
-					armv7s,
-				);
 				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/Breakpad.dst;
@@ -476,10 +464,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					"$(ARCHS_STANDARD)",
-					armv7s,
-				);
 				CLANG_CXX_LIBRARY = "libc++";
 				DSTROOT = /tmp/Breakpad.dst;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -527,7 +511,7 @@
 					../../common/mac,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-Wundef";

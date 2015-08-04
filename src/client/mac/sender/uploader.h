@@ -34,8 +34,6 @@
 
 #include <Foundation/Foundation.h>
 
-#import "common/mac/GTMDefines.h"
-
 #define kClientIdPreferenceKey @"clientid"
 
 extern NSString *const kGoogleServerType;

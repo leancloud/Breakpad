@@ -69,6 +69,9 @@ namespace {
 // server.
 NSString* const kLastSubmission = @"cn.leancloud.crashreport.LastSubmission";
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused"
+
 // Returns a NSString describing the current platform.
 NSString* GetPlatform() {
   // Name of the system call for getting the platform.
@@ -84,6 +87,8 @@ NSString* GetPlatform() {
     result = [NSString stringWithUTF8String:machine.get()];
   return result;
 }
+
+#pragma clang diagnostic pop
 
 }  // namespace
 
