@@ -88,9 +88,6 @@
 // will prevent uploads.
 - (void)setUploadInterval:(int)intervalInSeconds;
 
-//- (void)setApplicationId:(NSString*)applicationId;
-//- (void)setApplicationKey:(NSString*)applicationKey;
-
 // Set additional server parameters to send when uploading crash reports.
 - (void)setParametersToAddAtUploadTime:(NSDictionary*)uploadTimeParameters;
 

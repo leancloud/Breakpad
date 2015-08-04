@@ -228,22 +228,6 @@ NSString* GetPlatform() {
     uploadIntervalInSeconds_ = 0;
 }
 
-//- (void)setApplicationId:(NSString*)applicationId {
-//  NSAssert(!started_,
-//           @"The controller must not be started when setApplicationId is called");
-//  NSString *prefixedKey = [@BREAKPAD_SERVER_HEADER_PREFIX
-//                           stringByAppendingString:@"X-AVOSCloud-Application-Id"];
-//  [configuration_ setValue:applicationId forKey:prefixedKey];
-//}
-//
-//- (void)setApplicationKey:(NSString*)applicationKey {
-//  NSAssert(!started_,
-//           @"The controller must not be started when setApplicationKey is called");
-//  NSString *prefixedKey = [@BREAKPAD_SERVER_HEADER_PREFIX
-//                           stringByAppendingString:@"X-AVOSCloud-Application-Key"];
-//  [configuration_ setValue:applicationKey forKey:prefixedKey];
-//}
-
 - (void)setParametersToAddAtUploadTime:(NSDictionary*)uploadTimeParameters {
   NSAssert(!started_, @"The controller must not be started when "
                       "setParametersToAddAtUploadTime is called");
