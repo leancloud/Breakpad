@@ -39,6 +39,7 @@ using std::string;
 using std::vector;
 
 static const char kOutputSeparator = '|';
+static const int  lineBufferLen    = 1024;
 
 // StripSeparator takes a string |original| and returns a copy
 // of the string with all occurences of |kOutputSeparator| removed.
@@ -60,21 +61,22 @@ string PrintStackMachineReadable(int thread_num, const CallStack *stack) {
   string result = "";
   for (int frame_index = 0; frame_index < frame_count; ++frame_index) {
     const StackFrame *frame = stack->frames()->at(frame_index);
-    char buffer[1024]; 
-    sprintf(buffer, "%d%c%d%c", thread_num, kOutputSeparator, frame_index, kOutputSeparator);
+    char buffer[lineBufferLen];
+    snprintf(buffer, lineBufferLen, "%d%c%d%c", thread_num, kOutputSeparator, frame_index, kOutputSeparator);
     result += buffer;
 
     uint64_t instruction_address = frame->ReturnAddress();
 
     if (frame->module) {
       assert(!frame->module->code_file().empty());
-      sprintf(buffer, "%s", StripSeparator(PathnameStripper::File(frame->module->code_file())).c_str());
+      snprintf(buffer, lineBufferLen, "%s", StripSeparator(PathnameStripper::File(frame->module->code_file())).c_str());
       result += buffer;
       if (!frame->function_name.empty()) {
-        sprintf(buffer, "%c%s", kOutputSeparator, StripSeparator(frame->function_name).c_str());
+        snprintf(buffer, lineBufferLen, "%c%s", kOutputSeparator, StripSeparator(frame->function_name).c_str());
         result += buffer;
         if (!frame->source_file_name.empty()) {
-          sprintf(buffer, 
+          snprintf(buffer,
+                   lineBufferLen,
 		  "%c%s%c%d%c0x%" PRIx64,
 		  kOutputSeparator,
 		  StripSeparator(frame->source_file_name).c_str(),
@@ -84,7 +86,8 @@ string PrintStackMachineReadable(int thread_num, const CallStack *stack) {
 		  instruction_address - frame->source_line_base);
 	  result += buffer;
         } else {
-          sprintf(buffer,
+          snprintf(buffer,
+                   lineBufferLen,
 		  "%c%c%c0x%" PRIx64,
 		  kOutputSeparator,  // empty source file
 		  kOutputSeparator,  // empty source line
@@ -93,7 +96,8 @@ string PrintStackMachineReadable(int thread_num, const CallStack *stack) {
 	  result += buffer;
         }
       } else {
-        sprintf(buffer,
+        snprintf(buffer,
+                 lineBufferLen,
 		"%c%c%c%c0x%" PRIx64,
 		kOutputSeparator,  // empty function name
 		kOutputSeparator,  // empty source file
@@ -104,7 +108,8 @@ string PrintStackMachineReadable(int thread_num, const CallStack *stack) {
       }
     } else {
       // the printf before this prints a trailing separator for module name
-      sprintf(buffer,
+      snprintf(buffer,
+               lineBufferLen,
 	      "%c%c%c%c0x%" PRIx64,
 	      kOutputSeparator,  // empty function name
 	      kOutputSeparator,  // empty source file
@@ -137,7 +142,7 @@ static string PrintModulesMachineReadable(const CodeModules *modules) {
     main_address = main_module->base_address();
   }
   
-  char buffer[1024];
+  char buffer[lineBufferLen];
   
   unsigned int module_count = modules->module_count();
   for (unsigned int module_sequence = 0;
@@ -145,7 +150,8 @@ static string PrintModulesMachineReadable(const CodeModules *modules) {
        ++module_sequence) {
     const CodeModule *module = modules->GetModuleAtSequence(module_sequence);
     uint64_t base_address = module->base_address();
-    sprintf(buffer,
+    snprintf(buffer,
+             lineBufferLen,
 	    "Module%c%s%c%s%c%s%c%s%c0x%08" PRIx64 "%c0x%08" PRIx64 "%c%d\n",
 	    kOutputSeparator,
 	    StripSeparator(PathnameStripper::File(module->code_file())).c_str(),
@@ -194,20 +200,22 @@ JNIEXPORT jstring JNICALL Java_com_avos_uluru_breakpad_BreakpadMinidumpStackwalk
   }
 
   string result = "";
-  char buffer[1024];
+  char buffer[lineBufferLen];
 
-  // sprintf(buffer, "%s\n", process_state.crash_reason().c_str());
+  // snprintf(buffer, lineBufferLen, "%s\n", process_state.crash_reason().c_str());
 
   // Print OS and CPU information.
   // OS|{OS Name}|{OS Version}
   // CPU|{CPU Name}|{CPU Info}|{Number of CPUs}
-  sprintf(buffer, 
+  snprintf(buffer,
+           lineBufferLen,
 	  "OS%c%s%c%s\n", kOutputSeparator,
 	  StripSeparator(process_state.system_info()->os).c_str(),
 	  kOutputSeparator,
 	  StripSeparator(process_state.system_info()->os_version).c_str());
   result += buffer;
-  sprintf(buffer,
+  snprintf(buffer,
+           lineBufferLen,
 	  "CPU%c%s%c%s%c%d\n", kOutputSeparator,
 	  StripSeparator(process_state.system_info()->cpu).c_str(),
 	  kOutputSeparator,
@@ -222,10 +230,11 @@ JNIEXPORT jstring JNICALL Java_com_avos_uluru_breakpad_BreakpadMinidumpStackwalk
 
   // Print crash information.
   // Crash|{Crash Reason}|{Crash Address}|{Crashed Thread}
-  sprintf(buffer, "Crash%c", kOutputSeparator);
+  snprintf(buffer, lineBufferLen, "Crash%c", kOutputSeparator);
   result += buffer;
   if (process_state.crashed()) {
-    sprintf(buffer,
+    snprintf(buffer,
+             lineBufferLen,
 	    "%s%c0x%" PRIx64 "%c",
 	    StripSeparator(process_state.crash_reason()).c_str(),
 	    kOutputSeparator, process_state.crash_address(), kOutputSeparator);
@@ -235,20 +244,22 @@ JNIEXPORT jstring JNICALL Java_com_avos_uluru_breakpad_BreakpadMinidumpStackwalk
     // instead of the unhelpful "No crash"
     string assertion = process_state.assertion();
     if (!assertion.empty()) {
-      sprintf(buffer,
+      snprintf(buffer,
+               lineBufferLen,
 	      "%s%c%c", StripSeparator(assertion).c_str(),
 	      kOutputSeparator, kOutputSeparator);
       result += buffer;
     } else {
-      sprintf(buffer, "No crash%c%c", kOutputSeparator, kOutputSeparator);
+      snprintf(buffer, lineBufferLen, "No crash%c%c",
+               kOutputSeparator, kOutputSeparator);
       result += buffer;
     }
   }
   
   if (requesting_thread != -1) {
-    sprintf(buffer, "%d\n", requesting_thread);
+    snprintf(buffer, lineBufferLen, "%d\n", requesting_thread);
   } else {
-    sprintf(buffer, "\n");
+    snprintf(buffer, lineBufferLen, "\n");
   }
 
   result += buffer;

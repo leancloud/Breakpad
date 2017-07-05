@@ -1,5 +1,34 @@
-Breakpad is a set of client and server components which implement a
+
+Breakpad is a set of client and server components which implements a
 crash-reporting system.
+
+
+Build the lib:
+
+```
+./configure
+make
+g++ -fPIC -lc -shared \
+    -Wl,--no-undefined \
+    -L./src -lbreakpad \
+    -L./src/processor -L./src/common \
+    -I/usr/local/lib/jvm/jdk1.8.0_66/include/ \
+    -I/usr/local/lib/jvm/jdk1.8.0_66/include/linux \
+    -I. -I./src \
+    -I./src/processor \
+    -o libbreakpadminidump.so \
+    src/processor/minidump.o \
+    src/processor/fast_source_line_resolver.o \
+    src/processor/processstate.o \
+    src/processor/com_avos_uluru_breakpad_BreakpadMinidumpStackwalker.cc
+```
+
+```
+java -Djava.library.path=/mnt/avos/uluru-stats/native \
+  -cp uluru-stats-0.1.0.jar \
+  com.avos.uluru.breakpad.BreakpadMinidumpStackwalker \
+  dump_file shareSymbolsPath appSymbolsPath
+```
 
 
 -----
